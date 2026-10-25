@@ -20,7 +20,7 @@ from sklearn.svm import LinearSVC
 warnings.filterwarnings("ignore", category=UserWarning)
 
 st.set_page_config(
-    page_title="Email Classification Research Lab",
+    page_title="Email Spam Detection System",
     page_icon="✉️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -31,8 +31,23 @@ LABEL_NAMES = {0: "Legitimate (Ham)", 1: "Spam"}
 
 st.markdown("""
 <style>
-.block-container {padding-top: 1.5rem; padding-bottom: 2rem;}
-[data-testid="stMetric"] {background: rgba(120,120,120,0.08); padding: 12px; border-radius: 10px;}
+:root { --navy: #101936; --purple: #6d28d9; --cyan: #06b6d4; --ink: #172033; }
+.block-container {padding-top: 1.4rem; padding-bottom: 2.4rem; max-width: 1450px;}
+[data-testid="stAppViewContainer"] {background: linear-gradient(135deg, rgba(109,40,217,.045), rgba(6,182,212,.045) 55%, rgba(16,25,54,.025));}
+[data-testid="stHeader"] {background: rgba(255,255,255,0);}
+[data-testid="stMetric"] {background: linear-gradient(135deg, #ffffff, #f3f5ff); border: 1px solid #e1e7f5; padding: 16px 18px; border-radius: 16px; box-shadow: 0 5px 18px rgba(16,25,54,.06);}
+[data-testid="stMetricLabel"] {color: #53617d; font-weight: 650;}
+[data-testid="stMetricValue"] {color: #312e81;}
+section[data-testid="stSidebar"] {background: linear-gradient(180deg, #101936 0%, #25205b 58%, #164e63 100%);}
+section[data-testid="stSidebar"] * {color: #f8fafc !important;}
+section[data-testid="stSidebar"] [data-baseweb="select"] * {color: #172033 !important;}
+section[data-testid="stSidebar"] [data-testid="stNumberInput"] input {color: #172033 !important;}
+.stButton > button, .stDownloadButton > button {border-radius: 10px; font-weight: 650; border: 0; background: linear-gradient(100deg, #6d28d9, #0891b2); color: white;}
+.stButton > button:hover, .stDownloadButton > button:hover {border: 0; color: white; filter: brightness(1.08);}
+[data-testid="stTabs"] button {font-weight: 650;}
+h1 {color: #171b3b; letter-spacing: -.035em;}
+h2, h3 {color: #25205b;}
+[data-testid="stExpander"] {border: 1px solid #e1e7f5; border-radius: 12px;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -167,8 +182,15 @@ def draw_pr(y_true, score_map):
     fig.tight_layout()
     return fig
 
-st.title("✉️ Email Classification Research Lab")
-st.caption("A research prototype for comparing Multinomial Naïve Bayes and Linear SVM on labelled email text.")
+st.markdown("""
+<div style="padding: 1.55rem 1.8rem; border-radius: 22px; margin: .2rem 0 1.2rem 0;
+background: linear-gradient(115deg, #101936 0%, #43308c 52%, #087e8b 100%);
+box-shadow: 0 12px 30px rgba(25, 30, 80, .18);">
+<div style="font-size: .82rem; text-transform: uppercase; letter-spacing: .18em; color: #a5f3fc; font-weight: 750;">SMARTMAIL · INTELLIGENT EMAIL SECURITY</div>
+<div style="font-size: 2.2rem; line-height: 1.2; font-weight: 800; color: white; margin-top: .45rem;">Email Spam Detection System</div>
+<div style="font-size: 1rem; color: #e0e7ff; margin-top: .55rem;">Compare Naïve Bayes and Support Vector Machine predictions in one place.</div>
+</div>
+""", unsafe_allow_html=True)
 
 with st.sidebar:
     st.header("Experiment settings")
@@ -209,7 +231,6 @@ page = st.sidebar.radio(
 
 if page == "Research Dashboard":
     st.header("Research Dashboard")
-    st.info("This application is an experimental comparison tool. It does not claim to outperform Gmail or other commercial filtering systems.")
     total = len(dataset)
     spam_count = int((dataset["spam"] == 1).sum())
     ham_count = int((dataset["spam"] == 0).sum())
@@ -237,7 +258,6 @@ if page == "Research Dashboard":
     st.pyplot(fig)
     plt.close(fig)
     st.caption(f"Dataset source in this app: {dataset_source}. Split: {100-test_percent}% training / {test_percent}% testing; stratified; random seed {random_state}.")
-    st.warning("Confirm the dataset's original source and licensing before describing it as the official SpamAssassin corpus in a dissertation.")
 
 elif page == "Dataset Explorer":
     st.header("Dataset Explorer")
@@ -288,7 +308,7 @@ elif page == "Model Laboratory":
             st.write(f"Vocabulary size: **{len(vocab):,}**")
             st.write("Sample features:")
             st.write(", ".join(vocab[:50]))
-    st.warning("For a rigorous final study, use training-only cross-validation to select parameters, then evaluate the selected configuration once on a held-out test set. The sidebar settings are exploratory and should not be tuned against the final test score.")
+    st.caption("Tip: for a final report, choose settings using the training data and reserve the held-out test set for the final evaluation.")
 
 elif page == "Evaluation Centre":
     st.header("Evaluation Centre")
@@ -425,4 +445,4 @@ elif page == "Experiment Reports":
     st.download_button("Download experiment settings (CSV)", config.to_csv(index=False).encode("utf-8"), "experiment_settings.csv", "text/csv")
 
 st.divider()
-st.caption("Research prototype only. Dataset provenance must be verified and documented. Never use the test set to tune parameters or claim that these results represent Gmail or other commercial systems.")
+st.caption("SmartMail · Email Spam Detection System")
