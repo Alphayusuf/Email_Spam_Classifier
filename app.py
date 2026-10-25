@@ -20,7 +20,7 @@ from sklearn.svm import LinearSVC
 warnings.filterwarnings("ignore", category=UserWarning)
 
 st.set_page_config(
-    page_title="Email Spam Detection System",
+    page_title="Email Spam Classifier System",
     page_icon="✉️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -187,7 +187,7 @@ st.markdown("""
 background: linear-gradient(115deg, #101936 0%, #43308c 52%, #087e8b 100%);
 box-shadow: 0 12px 30px rgba(25, 30, 80, .18);">
 <div style="font-size: .82rem; text-transform: uppercase; letter-spacing: .18em; color: #a5f3fc; font-weight: 750;">SMARTMAIL · INTELLIGENT EMAIL SECURITY</div>
-<div style="font-size: 2.2rem; line-height: 1.2; font-weight: 800; color: white; margin-top: .45rem;">Email Spam Detection System</div>
+<div style="font-size: 2.2rem; line-height: 1.2; font-weight: 800; color: white; margin-top: .45rem;">Email Spam Classifier System</div>
 <div style="font-size: 1rem; color: #e0e7ff; margin-top: .55rem;">Compare Naïve Bayes and Support Vector Machine predictions in one place.</div>
 </div>
 """, unsafe_allow_html=True)
@@ -445,4 +445,4 @@ elif page == "Experiment Reports":
     st.download_button("Download experiment settings (CSV)", config.to_csv(index=False).encode("utf-8"), "experiment_settings.csv", "text/csv")
 
 st.divider()
-st.caption("SmartMail · Email Spam Detection System")
+st.caption("SmartMail · Email Spam Classifier System")
